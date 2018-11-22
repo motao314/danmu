@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Document</title>
+<style>
+body {
+    margin: 0;
+    perspective: 500px;
+    height: 100vh;
+    overflow: hidden;
+}    
+@keyframes show {
+    0% {
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0,0) rotateX(0) rotateY(0) scale(1);
+    }
+}
+@keyframes hide {
+    0% {
+        opacity: 1;
+        transform: translate(0,0) rotateX(0) rotateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-100px,100px) rotateX(720deg) rotateY(-90deg) scale(1.6);
+    }
+}
+
+.mark {
+    display: block;
+    width: 100px;
+    height: 40px;
+    background: rgba(0, 0, 0, .5);
+    border-radius: 20px;
+    margin: 200px auto 0;
+    font: 16px/40px "宋体";
+    color: #fff;
+    text-align: center;
+    transform: translate(100px,-200px) rotateX(720deg) rotateY(90deg) scale(.2);
+    animation: show 1.6s ease-out forwards;
+}
+</style>
+</head>
+<body>
+    <div class="mark">VIP</div>
+    <script>
+        setTimeout(function(){
+           let mark = document.querySelector(".mark");
+           mark.style.animation = 'hide 1.2s ease-in forwards';
+        },3000);
+    </script>
+</body>
+</html>
