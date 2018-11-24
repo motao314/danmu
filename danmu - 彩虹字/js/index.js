@@ -1,79 +1,3 @@
-var data = [
-    {
-        id: 1541821454355,
-        pid: 0,
-        position: {x: 146, y: 70},
-        text: "神仙下凡辛苦了",
-        vip: 1
-    },
-    {
-        id: 1541821558165,
-        pid: 0,
-        position: {x: 57, y: 127},
-        text: "丝桐，你瘦了。。",
-        vip: 2
-    },{
-        id: 1541830344641,
-        pid: 1,
-        position: {x: 236, y: 308},
-        text: "萌萌哒",
-        vip: 2
-    },{
-        id: 1541841550702,
-        pid: 2,
-        position: {x: 190, y: 120},
-        text: "呆傻",
-        vip: 0
-    },{
-        id: 1541841639030, 
-        pid: 3, 
-        text: "酷", 
-        position: {x: 56, y: 173},
-        vip: 2
-    },{
-        id: 1541841742304,
-        pid: 3,
-        position: {x: 192, y: 123},
-        text: "O(∩_∩)O哈哈~",
-        vip: 0
-    },{    
-        id: 1542622160657,
-        pid: 0,
-        position: {x: 233, y: 166},
-        text: "性感漂酿",
-        vip: 1
-    },{
-        id: 1542622204972,
-        pid: 0,
-        position: {x: 17, y: 444},
-        text: "美艳不可方物",
-        vip: 1
-    },{
-        id: 1542622254744,
-        pid: 0,
-        position: {x: 269, y: 427},
-        text: "还有谁！！",
-        vip: 2
-    },{
-        id: 1542622318086,
-        pid: 0,
-        position: {x: 159, y: 239},
-        text: "超可爱的~",
-        vip: 0
-    },{
-        id: 1542628367202,
-        pid: 0,
-        position: {x: 194.5, y: 358.5},
-        text: "好看好看好看",
-        vip: 1
-    },{
-        id: 1542628411068,
-        pid: 0,
-        position: {x: 109.5, y: 528.5},
-        text: "哇噻~好美",
-        vip: 2
-    }
-];
 // rem 计算
 (function(){
     var w = window.innerWidth;
@@ -81,6 +5,7 @@ var data = [
         document.documentElement.style.fontSize = 750/15 + "px";
     }
 })();
+
 function loading(){
     var loadData = [
         "img/img1.png",
@@ -259,15 +184,18 @@ window.addEventListener("load",function(){
         drag(mark);
         edit.appendChild(mark);
         edit.style.display = "block";
+        mark.style.left = mark.offsetLeft - mark.offsetWidth/2 + "px";
+        mark.style.top = mark.offsetTop - mark.offsetHeight/2 + "px";
+        mark.style.webkitTransform = mark.style.transform = "none";
     }
     editCancelBtn.addEventListener("tap",function(){
         edit.removeChild(mark);
         edit.style.display = "none"; 
     });
     editSureBtn.addEventListener("tap",function(){
-        var markInner = mark.children[0].children[0].innerHTML;
+        var markInner = mark.children[0].children[0].children[0].innerHTML;
         var markRect = mark.children[0].getBoundingClientRect();
-        hideMarkNub();
+        hidemarkNub();
         var picRect = picLists[now].getBoundingClientRect();
         var position = {
             x: markRect.left - picRect.left,
@@ -278,10 +206,8 @@ window.addEventListener("load",function(){
             pid: now,
             text: markInner,
             vip: MarkVip,
-            position: {
-                x: position.x,
-                y: position.y
-        }});
+            position: setPosition(position) 
+        });
         edit.removeChild(mark);
         edit.style.display = "none"; 
         showMarks()
@@ -303,25 +229,26 @@ window.addEventListener("load",function(){
         if(marks.length == 0){
             return ;
         }
-        var markNUb = document.createElement("div");
+        var markNub = document.createElement("div");
         clearInterval(timer);
-        markNUb.className = "mark-nub";
-        markNUb.innerHTML = "<span>"+marks.length+"</span>条弹幕";
-        markNUb.style.left = marks[0].position.x + "px";
-        markNUb.style.top = marks[0].position.y + "px";
-        markNUb.addEventListener("tap",function(e){
+        markNub.className = "mark-nub";
+        markNub.innerHTML = "<span>"+marks.length+"</span>条弹幕";
+        var position = getPosition(marks[0].position);
+        markNub.style.left = position.x + "px";
+        markNub.style.top = position.y + "px";
+        markNub.addEventListener("tap",function(e){
             showMarks();
             e.stopPropagation();
         });
-        drag(markNUb);
-        picLists[now].appendChild(markNUb);
+        drag(markNub);
+        picLists[now].appendChild(markNub);
         setTimeout(function(){
-            markNUb.style.transform = "scale(1)";
-            markNUb.style.webkitTransform = "scale(1)";
+            markNub.style.transform = "scale(1)";
+            markNub.style.webkitTransform = "scale(1)";
         },30);
     }
     function showMarks(){
-        hideMarkNub();
+        hidemarkNub();
         var marks = getMarks();
         var markLength = 5;//一屏显示5条弹幕
         var length = Math.ceil(marks.length/5);//总共有几屏弹幕
@@ -363,8 +290,9 @@ window.addEventListener("load",function(){
         }
         newMark.innerHTML = "<strong><em>"+inner+"</em></strong>";
         newMark.className = MarkVipIcons[markData.vip];
-        newMark.style.left = markData.position.x + "px";
-        newMark.style.top = markData.position.y + "px";
+        var position = getPosition(markData.position);
+        newMark.style.left = position.x + "px";
+        newMark.style.top = position.y + "px";
         picLists[now].appendChild(newMark);
         var marksFont = newMark.querySelectorAll("span");
         var x = 0;
@@ -397,7 +325,7 @@ window.addEventListener("load",function(){
     }
 
     // 隐藏弹幕
-    function hideMarkNub(){
+    function hidemarkNub(){
         if(!picLists[now]){
             return ;
         }
@@ -407,7 +335,7 @@ window.addEventListener("load",function(){
         }
     }
     function hideMarks(){
-        hideMarkNub();
+        hidemarkNub();
         clearInterval(timer);
         if(!picLists[now]){
             return ;
@@ -456,6 +384,29 @@ window.addEventListener("load",function(){
             var t = startPosition.y + dis.y;
             el.style.left = l + "px";
             el.style.top = t + "px";
+            let rect = el.getBoundingClientRect();
+            if(rect.top < 0){
+                el.style.top = 0 + "px";
+            } else if(rect.bottom > innerHeight){
+                el.style.top = innerHeight - rect.height + "px";
+            }
+            if(rect.left < 0){
+                el.style.left = 0 + "px";
+            } else if(rect.right > innerWidth){
+                el.style.left = innerWidth - rect.width + "px";
+            }
         })
+    }
+    function getPosition(position){
+        return {
+            x: position.x*innerWidth,
+            y: position.y*innerHeight 
+        }
+    }
+    function setPosition(position){
+        return {
+            x: position.x/innerWidth,
+            y: position.y/innerHeight 
+        }
     }
 });

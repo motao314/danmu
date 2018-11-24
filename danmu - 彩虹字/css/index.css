@@ -95,6 +95,13 @@ em {
 img {
     vertical-align: top;
 }
+body {
+    position: relative;
+    margin: 0 auto;
+    width: 7.5rem;
+    background: #ccc;
+    font-size: 16px;
+}
 mark {
     position: absolute;
     font: .3rem/.8rem "宋体";
@@ -168,15 +175,6 @@ mark::before {
     left: -.15rem;
     top: -.1rem ;
     background-image: url(../img/vip_icon_3-min.png);
-}
-
-
-body {
-    position: relative;
-    margin: 0 auto;
-    width: 7.5rem;
-    background: #ccc;
-    font-size: 16px;
 }
 #loading {
     position: fixed;
@@ -367,6 +365,7 @@ body {
     padding: 0 10px;
     border-radius: 3px;
     border: 1px solid #dcdcdc;
+    font-size: .2rem;
 }
 #btn {
     position: absolute;
@@ -385,7 +384,7 @@ body {
     height: 100%;
     z-index: 10;
     display: none;  
-    background: rgba(0, 0, 0, .2);   
+    background: rgba(0, 0, 0, .2);  
 }
 .edit-nav {
     position: absolute;
@@ -394,6 +393,7 @@ body {
     width: 100%;
     height: 1rem;
     background: rgba(0, 0, 0, .6);
+    z-index: 2; 
 }
 #edit-cancel-btn {
     position: absolute;
