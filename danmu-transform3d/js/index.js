@@ -228,7 +228,7 @@ window.addEventListener("load",function(){
         } else {
             timer = setTimeout(function(){
                 showMarkNub();
-            },3000)
+            },5000)
         }
         function show(){
             var start = nub*markLength;
