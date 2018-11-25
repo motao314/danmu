@@ -1,3 +1,9 @@
+(function(){
+    var w = window.innerWidth;
+    if(w > 750){
+        document.documentElement.style.fontSize = 750/15 + "px";
+    }
+})();
 function loading(){
     var loadData = [
         "img/img1.png",
@@ -28,39 +34,26 @@ function loading(){
     }
 }
 /* 自定义事件 */
-(function(){
-    var swiperUp = new Event("swiperup");
-    var swiperDown = new Event("swiperdown");
+function dispatchTap(el){
     var tap = new Event("tap");
     var startPoint = {};
-    document.addEventListener("touchstart",function(e){
+    el.addEventListener("touchstart",function(e){
         startPoint = {
             x: e.changedTouches[0].pageX,
             y: e.changedTouches[0].pageY
         };
     });
-    document.addEventListener("touchend",function(e){
+    el.addEventListener("touchend",function(e){
          var nowPoint = {
             x: e.changedTouches[0].pageX,
             y: e.changedTouches[0].pageY
-         };
-         if(Math.abs(nowPoint.y - startPoint.y)-Math.abs(nowPoint.x - startPoint.x)>5){
-            for(var i = 0; i < e.path.length;i++){
-                if(nowPoint.y - startPoint.y>0){
-                    e.path[i].dispatchEvent(swiperDown);
-                } else {
-                    e.path[i].dispatchEvent(swiperUp);
-                }
-            }
-         }   
+         };   
          if(Math.abs(nowPoint.y - startPoint.y) < 5
            && Math.abs(nowPoint.x - startPoint.x) < 5 ){
-            for(var i = 0; i < e.path.length;i++){
-                e.path[i].dispatchEvent(tap);
-            }
+                el.dispatchEvent(tap);
          }
     });
-})();
+}
 
 //图片切换
 window.addEventListener("load",function(){
@@ -108,10 +101,12 @@ window.addEventListener("load",function(){
     var message = document.querySelector("#message");
     var picImg = picList.querySelectorAll("img");
     for(var i = 0; i < picImg.length; i++ ){
+        dispatchTap(picImg[i]);
         picImg[i].addEventListener("tap",function(){
             message.classList.toggle("message-show");
         });
     }
+    dispatchTap(btn);
     btn.addEventListener("tap",function(){
         var txt = text.value.trim();
         var txtLength = 0;
@@ -149,10 +144,12 @@ window.addEventListener("load",function(){
         mark.style.top = mark.offsetTop - mark.offsetHeight/2 + "px";
         mark.style.webkitTransform = mark.style.transform = "none";
     }
+    dispatchTap(editCancelBtn);
     editCancelBtn.addEventListener("tap",function(){
         edit.removeChild(mark);
         edit.style.display = "none"; 
     });
+    dispatchTap(editSureBtn);
     editSureBtn.addEventListener("tap",function(){
         var markInner = mark.children[0].innerHTML;
         var markRect = mark.getBoundingClientRect();
@@ -196,6 +193,7 @@ window.addEventListener("load",function(){
         var position = getPosition(marks[0].position);
         markNub.style.left = position.x + "px";
         markNub.style.top = position.y + "px";
+        dispatchTap(markNub);
         markNub.addEventListener("tap",function(e){
             showMarks();
             e.stopPropagation();
@@ -221,12 +219,12 @@ window.addEventListener("load",function(){
                     clearInterval(timer);
                     timer = setTimeout(function(){
                         showMarkNub();
-                    },200)
+                    },3000)
                 } else {
                     nub++;
                     show();
                 }
-            },3000);
+            },1000);
         } else {
             timer = setTimeout(function(){
                 showMarkNub();
@@ -345,14 +343,14 @@ window.addEventListener("load",function(){
     }
     function getPosition(position){
         return {
-            x: position.x*innerWidth,
-            y: position.y*innerHeight 
+            x: position.x*document.body.clientWidth,
+            y: position.y*document.body.clientHeight 
         }
     }
     function setPosition(position){
         return {
-            x: position.x/innerWidth,
-            y: position.y/innerHeight 
+            x: position.x/document.body.clientWidth,
+            y: position.y/document.body.clientHeight 
         }
     }
 });
