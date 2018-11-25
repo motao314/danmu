@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VIP会员弹幕</title>
+    <link href="css/index.css" rel="stylesheet" />
+    <script src="js/data.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+<div id="loading">
+    <div class="loading-inner">
+        <div class="avatar">
+            <ul class="avatar-list">
+                <li class="avatar-1"></li>
+                <li class="avatar-2"></li>
+                <li class="avatar-3"></li>
+                <li class="avatar-1"></li>
+                <li class="avatar-2"></li>
+                <li class="avatar-3"></li>
+            </ul>
+        </div>
+        <div class="progress">
+            <div class="progress-bar">
+                <div class="progress-bar-ico"></div>
+            </div>
+        </div>
+    </div>
+</div>    
+<script>
+    loading();
+</script>
+<div id="view">
+    <ul id="picList">
+        <li class="next"><img src="img/img1.png"/></li>
+        <li class="next"><img src="img/img2.png"/></li>
+        <li class="next"><img src="img/img3.png"/></li>
+        <li class="next"><img src="img/img4.png"/></li>
+        <li class="next"><img src="img/img5.png"/></li>
+    </ul>
+    <div id="message">
+        <ul id="vip-list">
+            <li class="active">
+                <mark class="mark_vip mark-vip-1">
+                    <span><em>VIP</em></span>
+                </mark>
+            </li>
+            <li>
+                <mark class="mark_vip mark-vip-2">
+                    <span><em>VIP</em></span>
+                </mark>
+            </li>
+            <li>
+                <mark class="mark_vip mark-vip-3">
+                    <span><em>VIP</em></span>
+                </mark>
+            </li>
+        </ul>
+        <span id="vip-icon" class="icon icon-1"></span>
+        <input type="text" id="text" placeholder="请输入12个中文或24个英文字符" />
+        <a id="btn">发射</a>
+    </div>
+    <div id="edit">
+        <div class="edit-nav">
+            <a id="edit-cancel-btn">取消</a>
+            <a id="edit-sure-btn">确定</a>
+        </div>    
+        <!-- <div class="mark">
+            <mark>哈哈哈我们的目标是</mark>
+        </div> -->
+    </div>
+</div>    
+</body>
+</html>
