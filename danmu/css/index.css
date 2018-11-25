@@ -163,12 +163,15 @@ body {
 #view li {
     position: relative;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-    display: -webkit-box;
-    -webkit-box-align: center;
-    -webkit-box-pack: center;
+    overflow: hidden;
+}
+#picList img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
 }
 #edit {
     position: fixed;
@@ -181,9 +184,6 @@ body {
 #picList li {
     transition: .3s;
     opacity: 0.5;
-}
-#picList img {
-    width: 100%;
 }
 #message {
     position: fixed;
