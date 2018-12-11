@@ -251,7 +251,8 @@ window.addEventListener("load",function(){
         picLists[now].appendChild(newMark);
         var x = Math.ceil(Math.random()*200) + 80;
         var y = Math.ceil(Math.random()*80) + 150;
-        newMark.style.webkitTransform = newMark.style.transform = "translate("+x+"px,-"+y+"px) rotateX(720deg) rotateY(90deg) scale(.2)";
+        var scale = Math.ceil(Math.random()*100+50)/100;
+        newMark.style.webkitTransform = newMark.style.transform = "translate("+x+"px,-"+y+"px) rotateX(720deg) rotateY(90deg) scale("+scale+")";
         newMark.timer = setTimeout(function(){
             newMark.classList.add("show");
             newMark.timer = setTimeout(function(){
